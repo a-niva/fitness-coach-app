@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/user_profile_model.dart';
 import '../../core/services/local_storage_service.dart';
 import '../../core/constants/app_constants.dart';
-import '../../core/services/local_storage_service.dart';
 
 // Auth state model
 class AuthState {
@@ -89,8 +88,6 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthState?>> {
       _authStateController.add(null);
     }
   }
-
-// lib/presentation/providers/auth_provider.dart
 
   Future<bool> login({required String email, required String password}) async {
     state = const AsyncValue.loading();
