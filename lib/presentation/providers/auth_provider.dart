@@ -121,11 +121,10 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthState?>> {
 
       state = AsyncValue.data(authState);
       _authStateController.add(authState);
-      return true; // Indicate successful login
+      return true;
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
-      // You might want to log the error here if you're not rethrowing
-      return false; // Indicate failed login
+      return false;
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants/app_constants.dart';
+import '../providers/shared_preferences_provider.dart'; // AJOUTER CETTE LIGNE
 
 class LocalStorageService {
   final SharedPreferences _prefs;

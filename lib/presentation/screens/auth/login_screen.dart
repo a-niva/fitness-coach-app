@@ -33,18 +33,41 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       final email = _emailController.text.trim();
       final password = _passwordController.text;
 
-      final success = await ref.read(authNotifierProvider.notifier).login(
-            email: email,
-            password: password,
+      try {
+        // Call the login method. It now doesn't directly return a bool for success,
+        // but updates the state of authNotifierProvider.
+        await ref.read(authNotifierProvider.notifier).login(
+              email: email,
+              password: password,
+            );
+
+        // Read the current authentication state from the provider
+        final authState = ref.read(authNotifierProvider).value;
+
+        // Ensure the widget is still mounted before performing UI operations
+        if (!mounted) return;
+
+        // Check if authState is not null, indicating a successful login
+        if (authState != null) {
+          // Navigate to the DashboardScreen on success
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const DashboardScreen()),
           );
-
-      if (!mounted) return;
-
-      if (success) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const DashboardScreen()),
-        );
-      } else {
+        } else {
+          // This 'else' block would catch cases where login didn't throw an error
+          // but also didn't result in a valid authState (e.g., if the login
+          // logic itself handles an invalid credential by setting state to null
+          // without throwing).
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login failed. Please check your credentials.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } catch (e) {
+        // Handle any errors thrown by the login method
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Login failed. Please check your credentials.'),

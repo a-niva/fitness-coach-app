@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // AJOUTER CETTE LIGNE
 import 'core/providers/shared_preferences_provider.dart';
 import 'config/theme.dart';
 import 'config/routes.dart';
