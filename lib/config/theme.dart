@@ -43,8 +43,7 @@ class AppTheme {
         primary: primaryColor,
         secondary: secondaryColor,
         tertiary: accentColor,
-        surface: Colors
-            .white, // Supprimez "surface: surfaceColor," et gardez celui-ci
+        surface: surfaceColor,
         error: errorColor,
         onPrimary: onPrimary,
         onSecondary: onSecondary,

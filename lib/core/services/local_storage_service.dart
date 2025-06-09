@@ -119,6 +119,64 @@ class LocalStorageService {
   }
 }
 
+// Auth-specific methods
+Future<String?> getAuthToken() async {
+  return getString(StorageKeys.authToken);
+}
+
+Future<bool> saveAuthTokens({
+  required String authToken,
+  String? refreshToken,
+}) async {
+  final success1 = await setString(StorageKeys.authToken, authToken);
+  bool success2 = true;
+  if (refreshToken != null) {
+    success2 = await setString(StorageKeys.refreshToken, refreshToken);
+  }
+  return success1 && success2;
+}
+
+Future<String?> getRefreshToken() async {
+  return getString(StorageKeys.refreshToken);
+}
+
+Map<String, dynamic>? getUserProfile() {
+  final profileString = getString(StorageKeys.userProfile);
+  if (profileString != null) {
+    try {
+      return jsonDecode(profileString) as Map<String, dynamic>;
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
+}
+
+Future<bool> saveUserProfile(Map<String, dynamic> profile) async {
+  try {
+    final profileString = jsonEncode(profile);
+    return await setString(StorageKeys.userProfile, profileString);
+  } catch (e) {
+    return false;
+  }
+}
+
+bool isLoggedIn() {
+  return getBool(StorageKeys.isLoggedIn) ?? false;
+}
+
+Future<bool> setLoggedIn(bool value) async {
+  return await setBool(StorageKeys.isLoggedIn, value);
+}
+
+String? getUserId() {
+  return getString(StorageKeys.userId);
+}
+
+Future<bool> saveUserId(String userId) async {
+  return await setString(StorageKeys.userId, userId);
+}
+
 final localStorageServiceProvider = Provider<LocalStorageService>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
   return LocalStorageService(prefs);
