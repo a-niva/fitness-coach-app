@@ -36,3 +36,6 @@ windows/flutter/ephemeral/
 *.db
 *.tflite
 assets/ml_models/*
+
+# Notebook de test
+debug_test.ipynb
