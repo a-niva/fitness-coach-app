@@ -44,7 +44,6 @@ class AppTheme {
         secondary: secondaryColor,
         tertiary: accentColor,
         surface: surfaceColor,
-        surface: Colors.white,
         error: errorColor,
         onPrimary: onPrimary,
         onSecondary: onSecondary,
@@ -187,7 +186,6 @@ class AppTheme {
         onBackground: Colors.white,
         onError: onError,
       ),
-      scaffoldBackgroundColor: const Color(0xFF1C1B1F),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,

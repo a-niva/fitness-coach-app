@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/constants/app_constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../widgets/common/gradient_button.dart';
 import '../../widgets/common/loading_overlay.dart';
-import '../providers/auth_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../home/dashboard_screen.dart';
 import 'register_screen.dart';
 

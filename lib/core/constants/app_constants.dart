@@ -33,4 +33,5 @@ class StorageKeys {
   static const String userEmail = 'user_email';
   static const String lastWorkout = 'last_workout';
   static const String userPreferences = 'user_preferences';
+  static const String onboardingComplete = 'onboarding_complete';
 }

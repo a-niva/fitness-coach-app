@@ -46,12 +46,15 @@ class LocalStorageService {
   }
 
   // Auth-specific methods
-  Future<String?> getAuthToken() async {
+  String? getAuthToken() {
     return getString(StorageKeys.authToken);
   }
 
-  Future<bool> saveAuthTokens(String accessToken, String? refreshToken) async {
-    final success1 = await setString(StorageKeys.authToken, accessToken);
+  Future<bool> saveAuthTokens({
+    required String authToken,
+    String? refreshToken,
+  }) async {
+    final success1 = await setString(StorageKeys.authToken, authToken);
     bool success2 = true;
     if (refreshToken != null) {
       success2 = await setString(StorageKeys.refreshToken, refreshToken);
@@ -63,7 +66,7 @@ class LocalStorageService {
     return getString(StorageKeys.refreshToken);
   }
 
-  Future<Map<String, dynamic>?> getUserProfile() async {
+  Map<String, dynamic>? getUserProfile() {
     final profileString = getString(StorageKeys.userProfile);
     if (profileString != null) {
       try {
