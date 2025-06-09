@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import '../../../config/app_config.dart';
-import '../../../config/routes.dart';
-import '../../../config/theme.dart';
-import '../../../core/utils/validators.dart';
-import '../../providers/auth_provider.dart';
+import '../../core/constants/app_constants.dart';
 import '../../widgets/common/gradient_button.dart';
 import '../../widgets/common/loading_overlay.dart';
+import '../providers/auth_provider.dart';
+import '../home/dashboard_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
@@ -20,8 +18,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _isPasswordVisible = false;
-  bool _isLoading = false;
+  bool _obscurePassword = true;
+  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -30,204 +28,242 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> _handleLogin() async {
-    if (!_formKey.currentState!.validate()) return;
+  Future<void> _login() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
 
-    setState(() => _isLoading = true);
-
-    try {
-      await ref.read(authNotifierProvider.notifier).login(
-            email: _emailController.text.trim(),
-            password: _passwordController.text,
+      final success = await ref.read(authProvider.notifier).login(
+            email: email,
+            password: password,
           );
 
-      // Navigation is handled by GoRouter redirect
-    } catch (e) {
-      if (mounted) {
+      if (!mounted) return;
+
+      if (success) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const DashboardScreen()),
+        );
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Login failed: ${e.toString()}'),
-            backgroundColor: AppTheme.errorColor,
+          const SnackBar(
+            content: Text('Login failed. Please check your credentials.'),
+            backgroundColor: Colors.red,
           ),
         );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return LoadingOverlay(
-      isLoading: _isLoading,
-      child: Scaffold(
-        backgroundColor: AppTheme.backgroundColor,
-        body: SafeArea(
+    final authState = ref.watch(authProvider);
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      body: LoadingOverlay(
+        isLoading: authState.isLoading,
+        child: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppTheme.spacingL),
+            padding: EdgeInsets.all(AppSpacing.spacingL),
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: AppTheme.spacingXXL),
+                  SizedBox(height: AppSpacing.spacingXXL),
 
                   // Logo and Title
-                  Center(
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            gradient: AppTheme.primaryGradient,
-                            borderRadius: BorderRadius.circular(
-                              AppTheme.radiusL,
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.fitness_center,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                        ),
-                        const SizedBox(height: AppTheme.spacingM),
-                        Text(
-                          AppConfig.appName,
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-                        const SizedBox(height: AppTheme.spacingS),
-                        Text(
-                          'Your AI-Powered Fitness Coach',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(color: AppTheme.textSecondary),
-                        ),
-                      ],
+                  Icon(
+                    Icons.fitness_center,
+                    size: 80,
+                    color: theme.colorScheme.primary,
+                  ),
+                  SizedBox(height: AppSpacing.spacingL),
+
+                  Text(
+                    'Fitness Coach AI',
+                    style: theme.textTheme.headlineLarge?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-
-                  const SizedBox(height: AppTheme.spacingXXL),
-
-                  // Welcome text
-                  Text(
-                    'Welcome Back!',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: AppTheme.spacingS),
-                  Text(
-                    'Sign in to continue your fitness journey',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppTheme.textSecondary,
-                        ),
                     textAlign: TextAlign.center,
                   ),
 
-                  const SizedBox(height: AppTheme.spacingXL),
+                  SizedBox(height: AppSpacing.spacingM),
 
-                  // Email field
+                  Text(
+                    'Your AI-powered personal trainer',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  SizedBox(height: AppSpacing.spacingXXL),
+
+                  // Email Field
                   TextFormField(
                     controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Email',
-                      hintText: 'Enter your email',
-                      prefixIcon: Icon(Icons.email_outlined),
+                      prefixIcon: const Icon(Icons.email_outlined),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.radiusL),
+                      ),
                     ),
-                    validator: Validators.email,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your email';
+                      }
+                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(value!)) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
                   ),
 
-                  const SizedBox(height: AppTheme.spacingM),
+                  SizedBox(height: AppSpacing.spacingM),
 
-                  // Password field
+                  // Password Field
                   TextFormField(
                     controller: _passwordController,
-                    obscureText: !_isPasswordVisible,
-                    textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      hintText: 'Enter your password',
-                      prefixIcon: const Icon(Icons.lock_outline),
+                      prefixIcon: const Icon(Icons.lock_outlined),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                          _obscurePassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
                         ),
                         onPressed: () {
                           setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
+                            _obscurePassword = !_obscurePassword;
                           });
                         },
                       ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.radiusL),
+                      ),
                     ),
-                    validator: Validators.password,
-                    onFieldSubmitted: (_) => _handleLogin(),
+                    obscureText: _obscurePassword,
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Please enter your password';
+                      }
+                      if (value!.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
                   ),
 
-                  const SizedBox(height: AppTheme.spacingS),
+                  SizedBox(height: AppSpacing.spacingS),
 
-                  // Forgot password
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        // TODO: Implement forgot password
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Forgot password coming soon!'),
+                  // Remember Me & Forgot Password
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: _rememberMe,
+                            onChanged: (value) {
+                              setState(() {
+                                _rememberMe = value ?? false;
+                              });
+                            },
                           ),
-                        );
-                      },
-                      child: const Text('Forgot Password?'),
-                    ),
+                          const Text('Remember me'),
+                        ],
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // TODO: Implement forgot password
+                        },
+                        child: const Text('Forgot Password?'),
+                      ),
+                    ],
                   ),
 
-                  const SizedBox(height: AppTheme.spacingL),
+                  SizedBox(height: AppSpacing.spacingXL),
 
-                  // Login button
-                  GradientButton(onPressed: _handleLogin, text: 'Sign In'),
+                  // Login Button
+                  GradientButton(
+                    text: 'Login',
+                    onPressed: _login,
+                    isLoading: authState.isLoading,
+                    height: 56,
+                  ),
 
-                  const SizedBox(height: AppTheme.spacingL),
+                  SizedBox(height: AppSpacing.spacingM),
 
                   // Divider
                   Row(
                     children: [
                       const Expanded(child: Divider()),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppTheme.spacingM,
-                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppSpacing.spacingM),
                         child: Text(
                           'OR',
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.6),
+                          ),
                         ),
                       ),
                       const Expanded(child: Divider()),
                     ],
                   ),
 
-                  const SizedBox(height: AppTheme.spacingL),
+                  SizedBox(height: AppSpacing.spacingS),
 
-                  // Sign up link
+                  // Social Login Buttons (Optional)
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      // TODO: Implement Google Sign In
+                    },
+                    icon: const Icon(Icons.g_mobiledata),
+                    label: const Text('Continue with Google'),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.radiusL),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: AppSpacing.spacingL),
+
+                  // Sign Up Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Don't have an account? ",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: theme.textTheme.bodyMedium,
                       ),
                       TextButton(
-                        onPressed: () => context.go(AppRoutes.register),
-                        child: const Text('Sign Up'),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const RegisterScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ],
                   ),
+
+                  SizedBox(height: AppSpacing.spacingL),
                 ],
               ),
             ),

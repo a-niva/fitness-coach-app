@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/user_profile_model.dart';
 import '../../core/services/local_storage_service.dart';
+import '../../core/constants/app_constants.dart';
 
 // Auth state model
 class AuthState {
@@ -41,9 +42,9 @@ final authStateProvider = StreamProvider<AuthState?>((ref) {
 // Auth notifier provider
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<AuthState?>>((ref) {
-      final localStorage = ref.watch(localStorageServiceProvider);
-      return AuthNotifier(localStorage);
-    });
+  final localStorage = ref.watch(localStorageServiceProvider);
+  return AuthNotifier(localStorage);
+});
 
 class AuthNotifier extends StateNotifier<AsyncValue<AuthState?>> {
   final LocalStorageService _localStorage;

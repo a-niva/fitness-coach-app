@@ -29,7 +29,8 @@ class AppRoutes {
       case onboardingProfile:
         return MaterialPageRoute(builder: (_) => const ProfileBasicScreen());
       case onboardingEquipment:
-        return MaterialPageRoute(builder: (_) => const EquipmentSelectionScreen());
+        return MaterialPageRoute(
+            builder: (_) => const EquipmentSelectionScreen());
       case onboardingGoals:
         return MaterialPageRoute(builder: (_) => const GoalsSelectionScreen());
       case onboardingPreferences:

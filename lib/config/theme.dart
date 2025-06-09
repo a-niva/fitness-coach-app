@@ -7,29 +7,29 @@ class AppTheme {
   static const Color backgroundColor = Color(0xFFF18F01);
   static const Color surfaceColor = Color(0xFFFFFBFE);
   static const Color errorColor = Color(0xFFBA1A1A);
-  
+
   static const Color onPrimary = Colors.white;
   static const Color onSecondary = Colors.white;
   static const Color onSurface = Color(0xFF1C1B1F);
   static const Color onBackground = Color(0xFF1C1B1F);
   static const Color onError = Colors.white;
-  
+
   static const Color successColor = Color(0xFF4CAF50);
   static const Color warningColor = Color(0xFFFF9800);
   static const Color infoColor = Color(0xFF2196F3);
-  
+
   // Text colors
   static const Color textPrimary = Color(0xFF1C1B1F);
   static const Color textSecondary = Color(0xFF49454F);
   static const Color textDisabled = Color(0xFF73777F);
-  
+
   // Gradient colors
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [primaryColor, accentColor],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
-  
+
   static const LinearGradient secondaryGradient = LinearGradient(
     colors: [secondaryColor, backgroundColor],
     begin: Alignment.topLeft,
@@ -44,7 +44,7 @@ class AppTheme {
         secondary: secondaryColor,
         tertiary: accentColor,
         surface: surfaceColor,
-        background: Colors.white,
+        surface: Colors.white,
         error: errorColor,
         onPrimary: onPrimary,
         onSecondary: onSecondary,
@@ -105,7 +105,8 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: errorColor, width: 2),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         hintStyle: TextStyle(color: textSecondary),
       ),
       textTheme: const TextTheme(
