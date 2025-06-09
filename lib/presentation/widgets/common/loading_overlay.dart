@@ -73,7 +73,7 @@ class LoadingOverlayProvider extends StatelessWidget {
       context: context,
       barrierDismissible: false,
       builder: (context) => PopScope(
-        onWillPop: () async => false,
+        canPop: false,
         child: Center(
           child: Container(
             padding: const EdgeInsets.all(20),

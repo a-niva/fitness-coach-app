@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/user_profile_model.dart';
 import '../../core/services/local_storage_service.dart';
 import '../../core/constants/app_constants.dart';
+import '../../core/services/local_storage_service.dart';
 
 // Auth state model
 class AuthState {
@@ -58,7 +59,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthState?>> {
 
   Future<void> _checkAuthStatus() async {
     try {
-      final token = await _localStorage.getAuthToken();
+      final token = _localStorage.getAuthToken();
       final userId = _localStorage.getString(StorageKeys.userId);
       final userProfileJson = _localStorage.getUserProfile();
       final isOnboardingComplete =
