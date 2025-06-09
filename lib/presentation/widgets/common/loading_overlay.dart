@@ -72,7 +72,7 @@ class LoadingOverlayProvider extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => WillPopScope(
+      builder: (context) => PopScope(
         onWillPop: () async => false,
         child: Center(
           child: Container(

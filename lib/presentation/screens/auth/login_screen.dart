@@ -33,7 +33,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       final email = _emailController.text.trim();
       final password = _passwordController.text;
 
-      final success = await ref.read(authProvider.notifier).login(
+      final success = await ref.read(authNotifierProvider.notifier).login(
             email: email,
             password: password,
           );
@@ -57,7 +57,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authProvider);
+    final authState = ref.watch(authNotifierProvider);
     final theme = Theme.of(context);
 
     return Scaffold(

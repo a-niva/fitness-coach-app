@@ -43,12 +43,12 @@ class AppTheme {
         primary: primaryColor,
         secondary: secondaryColor,
         tertiary: accentColor,
-        surface: surfaceColor,
+        surface: Colors
+            .white, // Supprimez "surface: surfaceColor," et gardez celui-ci
         error: errorColor,
         onPrimary: onPrimary,
         onSecondary: onSecondary,
         onSurface: onSurface,
-        onBackground: onBackground,
         onError: onError,
       ),
       scaffoldBackgroundColor: Colors.white,
