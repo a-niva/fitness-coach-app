@@ -1,0 +1,232 @@
+[
+  {
+    "id": "1",
+    "name_fr": "Développé assis à la machine convergente",
+    "name_eng": "Convergent Machine Seated Press",
+    "equipment": ["convergent machine"],
+    "level": "basic",
+    "bodyPart": "Pectoraux",
+    "muscle_groups": ["chest", "shoulders", "triceps"],
+    "sets_reps": [
+      {
+        "level": "beginner",
+        "sets": 3,
+        "sets_tolerance": 1,
+        "reps": 10,
+        "reps_tolerance": 3
+      },
+      {
+        "level": "intermediate",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 3
+      },
+      {
+        "level": "advanced",
+        "sets": 5,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 3
+      },
+      {
+        "level": "elite",
+        "sets": 6,
+        "sets_tolerance": 1,
+        "reps": 6,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "extreme",
+        "sets": 7,
+        "sets_tolerance": 1,
+        "reps": 5,
+        "reps_tolerance": 2
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name_fr": "Développé couché avec haltères",
+    "name_eng": "Dumbbell Bench Press",
+    "equipment": ["dumbbells", "bench"],
+    "level": "basic",
+    "bodyPart": "Pectoraux",
+    "muscle_groups": ["chest", "shoulders", "triceps"],
+    "sets_reps": [
+      {
+        "level": "beginner",
+        "sets": 3,
+        "sets_tolerance": 1,
+        "reps": 12,
+        "reps_tolerance": 3
+      },
+      {
+        "level": "intermediate",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 10,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "advanced",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "elite",
+        "sets": 5,
+        "sets_tolerance": 1,
+        "reps": 6,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "extreme",
+        "sets": 6,
+        "sets_tolerance": 1,
+        "reps": 5,
+        "reps_tolerance": 1
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name_fr": "Squat avec barre",
+    "name_eng": "Barbell Back Squat",
+    "equipment": ["barbell", "squat rack"],
+    "level": "intermediate",
+    "bodyPart": "Jambes",
+    "muscle_groups": ["quadriceps", "glutes", "hamstrings"],
+    "sets_reps": [
+      {
+        "level": "beginner",
+        "sets": 3,
+        "sets_tolerance": 1,
+        "reps": 12,
+        "reps_tolerance": 3
+      },
+      {
+        "level": "intermediate",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 10,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "advanced",
+        "sets": 5,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "elite",
+        "sets": 5,
+        "sets_tolerance": 1,
+        "reps": 5,
+        "reps_tolerance": 1
+      },
+      {
+        "level": "extreme",
+        "sets": 6,
+        "sets_tolerance": 1,
+        "reps": 3,
+        "reps_tolerance": 1
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name_fr": "Tirage horizontal à la poulie",
+    "name_eng": "Cable Row",
+    "equipment": ["cable machine"],
+    "level": "basic",
+    "bodyPart": "Dos",
+    "muscle_groups": ["lats", "rhomboids", "middle back"],
+    "sets_reps": [
+      {
+        "level": "beginner",
+        "sets": 3,
+        "sets_tolerance": 1,
+        "reps": 12,
+        "reps_tolerance": 3
+      },
+      {
+        "level": "intermediate",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 10,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "advanced",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "elite",
+        "sets": 5,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "extreme",
+        "sets": 6,
+        "sets_tolerance": 1,
+        "reps": 6,
+        "reps_tolerance": 2
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "name_fr": "Curl biceps avec haltères",
+    "name_eng": "Dumbbell Bicep Curl",
+    "equipment": ["dumbbells"],
+    "level": "basic",
+    "bodyPart": "Bras",
+    "muscle_groups": ["biceps"],
+    "sets_reps": [
+      {
+        "level": "beginner",
+        "sets": 3,
+        "sets_tolerance": 1,
+        "reps": 12,
+        "reps_tolerance": 3
+      },
+      {
+        "level": "intermediate",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 10,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "advanced",
+        "sets": 4,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "elite",
+        "sets": 5,
+        "sets_tolerance": 1,
+        "reps": 8,
+        "reps_tolerance": 2
+      },
+      {
+        "level": "extreme",
+        "sets": 6,
+        "sets_tolerance": 1,
+        "reps": 6,
+        "reps_tolerance": 2
+      }
+    ]
+  }
+]
